@@ -108,9 +108,13 @@ def get_requests_kwargs(args, base_headers=None):
     headers = encode_headers(headers)
 
     credentials = None
-    if args.auth:
+    if args.auth_type:
         auth_plugin = plugin_manager.get_auth_plugin(args.auth_type)()
-        credentials = auth_plugin.get_auth(args.auth.key, args.auth.value)
+        auth_plugin.args = args
+        key = value = None
+        if args.auth:
+            key, value = args.auth.key, args.auth.value
+        credentials = auth_plugin.get_auth(key, value)
 
     cert = None
     if args.cert:

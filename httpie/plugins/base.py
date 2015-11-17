@@ -10,6 +10,16 @@ class BasePlugin(object):
     # This be set automatically once the plugin has been loaded.
     package_name = None
 
+    def __init__(self):
+        # the parsed args
+        self.args = None
+
+    @staticmethod
+    def after_loaded():
+        """Hook to customize parser or anything else, for example: register more argument options
+        Note: httpie.cli.parser must be available on this hook"""
+        pass
+
 
 class AuthPlugin(BasePlugin):
     """

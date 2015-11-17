@@ -78,6 +78,10 @@ def main(args=sys.argv[1:], env=Environment(), error=None):
 
     from httpie.cli import parser
 
+    for plugin in plugin_manager:
+        if hasattr(plugin, 'after_loaded'):
+            plugin.after_loaded()
+
     if env.config.default_options:
         args = env.config.default_options + args
 
